@@ -1,0 +1,25 @@
+Select 
+(Fallecido.f_nombre || ' ' || fallecido.f_apellido)as nombre,
+fallecido.f_hora_defuncion as defuncion  , 
+fallecido.f_hora_EMBALSAMIENTO as embalsamiento
+from fallecido
+
+select velatorio.velatorio_direccion, count (reserva.velatorio_id), sum( factura.fac_total)
+from velatorio
+inner join reserva on reserva.velatorio_id = velatorio.velatorio_id
+inner join factura on factura.res_id = reserva.res_id
+group by velatorio.velatorio_direccion
+
+
+select  servicio_velatorio.ser_nombre , count(RESERVA_SERVICIO_VELATORIo.ser_id ), sum(servicio_velatorio.ser_precio) 
+from  servicio_velatorio
+inner join RESERVA_SERVICIO_VELATORIo on RESERVA_SERVICIO_VELATORIo.ser_id = servicio_velatorio.ser_id
+group by  servicio_velatorio.ser_nombre
+
+
+select  causa_muerte.cm_nombre, fallecido.f_genero , count (FALLECIDO_CAUSA_MUERTE.fcm_id)
+from  FALLECIDO_CAUSA_MUERTE
+inner join causa_muerte on FALLECIDO_CAUSA_MUERTE.cm_id = causa_muerte.cm_id
+inner join fallecido on FALLECIDO_CAUSA_MUERTE.f_id = fallecido.f_id
+group by causa_muerte.cm_nombre, fallecido.f_genero
+order by fallecido.f_genero
